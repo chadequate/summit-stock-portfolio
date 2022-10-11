@@ -1,5 +1,10 @@
 # release notes / change log / task list
 
+### data setup (day 2)
+- added h2 dependencies and configuration to Java SPA
+- installed postgresql for learning/rapid prototyping of data design (never used this, trying to avoid SSMS/SQL Server)
+- plan is to create sql scripts for initialization of file-persisted h2
+
 ### project setup
 - blank spring initilizr project
 - new github repo
