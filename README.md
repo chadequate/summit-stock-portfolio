@@ -8,7 +8,7 @@
 - add instructions to readme
 
 ### project approach
-- Figured I'd stick with Java as that's mostly what I've been exposed to in recent years. At the very least this approach will be valuable experience for getting back to daily coding in my current situation. I'll start with a blank Spring Initilizr project and add dependancies as needed, starting with a Spring Data or Spring Rest to facilitate what I imagine will be some standard CRUD operations around the relational database I plan to build. I briefly considered something more SPA/framework-y like JHipster, but decided against that as the last Boostrap kind of thing I did was in .NET, I'm not as familiar with Java options, and not reading ahead I didn't want to box myself in too much too early on. 
+- Figured I'd stick with Java as that's mostly what I've been exposed to in recent years. At the very least this approach will be valuable experience for getting back to daily coding in my current situation. I'll start with a blank Spring Initilizr project and add dependancies as needed, starting with a Spring Data or Spring Rest to facilitate what I imagine will be some standard CRUD operation RESTful APIs around the h2 relational database I plan to build. I briefly considered something more SPA/framework-y like JHipster, but decided against that as the last Boostrap kind of thing I did was in .NET, I'm not as familiar with Java options, and not reading ahead I didn't want to box myself in too much too early on. 
 
 ### dev environment setup (from zero)
 - install homebrew
