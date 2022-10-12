@@ -1,5 +1,23 @@
 # release notes / change log / task list
 
+### phase 2
+
+Okay, right off the bat this is moving in a different direction than I imagined, but still seems fairly straight forward. Interestingly the links to Alphavantage.co and it's Quote Endpoint don't work for me in the PDF viewer I'm using, but I won't spend any time figuring that out just yet since the context seems clear. 
+
+Initail thoughts based on details pulled from the first paragraph
+
+RESTful service
+ - RESTful service: Make a GET request to retrieve Price information
+ - Get will subsequently make a REST call out to Quote Endpoint to retrieve a Price for a given StockSymbol (or equivalent) on a given TradeTime
+ - Use the value returned to populate the Price field of a new trade record
+
+Securing the API secret
+ - For all of Pivotal Cloud Foundry's faults, I quite like the Configuration Server pattern it uses. Encrypted secrets hosted in a Github repo, decrypted and injected into applications at runtime
+ - I'm just now getting used to Secret Manager in GCP, which seems functionally somewhat similar but lacks the storage options of PCF's implementation
+ - Basically I think this decision will be largely driven by the best practices of the applicaiton hosting environment 
+ - I wonder how this is typically done in AWS
+
+
 ### data model (day 3)
 From the document:
  - Buying a quantity of a specific stock, at a specific time, at a specific price
