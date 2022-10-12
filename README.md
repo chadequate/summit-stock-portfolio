@@ -1,5 +1,29 @@
 # release notes / change log / task list
 
+### data model (day 3)
+From the document:
+ - Buying a quantity of a specific stock, at a specific time, at a specific price
+ - Selling a quanity of a specific stock, at a specific time, at a specific price
+ - Summarizing the total purchase price of all stocks in the portfolio
+ - Summarizing the total purchase price of a single stock
+ - Summarizing net gain/loss for all stocks in the portfolio
+ - Summarizing net gain/loss for a single stock
+
+At this point I'm thinking maybe a single table, debits and credits, accounting style. I did something similar once when refactoring an inventory system, I liked how that turned out. I would make a Create Table script to define it in a relational database, in order to leverage aggregate functions (SUM). Buying is a positive integer in the quantity column, Selling is negative, Summing and Grouping can handle the rest. Quick and dirty. Simple.
+
+Maybe something like... 
+
+CREATE TABLE Trades (
+    StockSymbol varchar(5),
+    Quantity int,
+    Price money,
+    TradeTime datetime
+);
+
+StockSymbol would be the primary key with a unique constraint. Can always add some other key later if needed. I know the instructions at this point call for a single user, but I feel like multiple users could be brought into things later, which would obviously change the key. Maybe a composit key then. 
+
+## ^^^ begin conceptual design - no implementation ^^^
+
 ### data setup (day 2)
 - added h2 dependencies and configuration to Java SPA
 - installed postgresql for learning/rapid prototyping of data design (never used this, trying to avoid SSMS/SQL Server)
