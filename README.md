@@ -9,7 +9,7 @@ From the document:
  - Summarizing net gain/loss for all stocks in the portfolio
  - Summarizing net gain/loss for a single stock
 
-At this point I'm thinking maybe a single table, debits and credits, accounting style. I did something similar once when refactoring an inventory system, I liked how that turned out. I would make a Create Table script to define it in a relational database, in order to leverage aggregate functions (SUM). Buying is a positive integer in the quantity column, Selling is negative, Summing and Grouping can handle the rest. Quick and dirty. Simple.
+At this point I'm thinking maybe a single table, debits and credits, accounting style. I did something similar once when refactoring an inventory system, I liked how that turned out. I would make a Create Table script to define it in a relational database, heavy leveraging of aggregate functions (SUM). Buying is a positive integer in the quantity column, Selling is negative, Summing and Grouping can handle the rest. Quick and dirty. Simple.
 
 Maybe something like... 
 
