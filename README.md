@@ -17,6 +17,22 @@ Securing the API secret
  - Basically I think this decision will be largely driven by the best practices of the applicaiton hosting environment 
  - I wonder how this is typically done in AWS
 
+Paragraph 2
+
+There seem to be two main concerns here
+ - Clean interface
+ - Testing
+
+Makes sense as unit testing and interface abstraction go hand-in-hand. I'd make an interface class that basically aligns with what I laid out for the first paragraph and hide the Alphavantage.co specifics in its own implementation. 
+
+Paragraph 3
+
+Service mocking for unit tests. I actually don't think I've ever seen anyone try to write a unit test that instantiated/called-out-to an external service. That would be horrifying. Obviously we don't want to be testing against anyone else's service. Unit tests should be entirely self-contained and testing our own code.
+
+Paragraph 4
+
+Integration tests. Today in my current role we're using Newman, the CLI/test runner for Postman, which works fairly well. We mostly use these to verify our own contracts, but I would be interested to learn about better ways to get ahead of contract changes in external services. 
+
 
 ### data model (day 3)
 From the document:
