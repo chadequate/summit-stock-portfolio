@@ -2,7 +2,7 @@
 
 ### phase 2
 
-Okay, right off the bat this is moving in a different direction than I imagined, but still seems fairly straight forward. Interestingly the links to Alphavantage.co and it's Quote Endpoint don't work for me in the PDF viewer I'm using, but I won't spend any time figuring that out just yet since the context seems clear. 
+Okay, right off the bat this is moving in a different direction than I expected, but still seems fairly straight forward. Interestingly the links to Alphavantage.co and it's Quote Endpoint don't work for me in the PDF viewer I'm using, but I won't spend any time figuring that out just yet since the context seems clear. 
 
 Initail thoughts based on details pulled from the first paragraph
 
