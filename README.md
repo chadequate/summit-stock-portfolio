@@ -12,13 +12,31 @@ Which is pretty close to how I like to design greenfield projects, usually data 
 
 UI will be the weakest link for me. My last UI work was in my previous role, almost six years ago. That was in Angular, 1.3 I think? It was my first and only experience with more modern Javascript frameworks. We used TypeScript with that, which made it easier/more relateable for me. 
 
-So with that, and a bit of Googling to find out what's currently popular in web UIs, I feel like AngularJS might be a good option. I'd go with that here. 
+So with that, and a bit of Googling to find out what's currently popular in web UIs, I feel like AngularJS might be a good option. I'd go with that here. This part of the project will contain the most unknowns for me, but I'll do my best to lay out a good starting approach.
 
 I found a number of walkthroughs online for using AngularJS with a Java Spring MVC application. I'd create Angular Views in the project, which would directly call the RESTful webservice developed in the previous phase. 
 
+There are more bullet points in this phase, so I'll just respond to those.
 
+ - ### How business-logic is enforced and how the UI handles errors (this was built in Phase 1)
+I'd try to keep as much business logic and error handling as possible in the models, hopefully providing REST responses in a way that's easy/standard for Angular to deal with. I vaguely recall some patterns around this in my previous Angular work, I assume there are some standards/best pratices for how to handle and display errors in the various controls. How to automatically display a red info icon next to a text box, for example. There are many unknowns her
 
+ - ### How the application could accommodate a different UI on top of the same work built in previous phases
+The UI in this case is just calling the REST service, I could easily develop multiple concurrent UIs. 
 
+ - ### How you might test that the UI is functioning correctly. Note, depending on the type of UI, this can be pretty expensive to implement. A simple note in the README is sufficient to describe how you would do this if the scope extends beyond the 1-2 hours required for this exercise
+I'm going to assume automated testing here? I know that Selenium is popular with teams that do UI work in my current group, but I've literally never done any kind of automated UI testing. I have zero experience in this area, and would need to research more. 
+
+### The UI needs to support the following actions:
+
+ - ### Buying a stock (user specifies stock symbol and quanitity of shares to purchase)
+ 
+ - ### Selling a stock (user specifies stock symbol and quantity of shared to sell)
+ - ### Viewing the net-worth of the entire stock portfolio (i.e. all shares of currentlyowned stocks at their current market value)
+ - ### Viewing a "ledger" of transactions, in historical order
+ - ### Viewing the realized net gain/loss of the portfolio (the price at which shares were sold minus the price at which they were purchased)
+ - ### Handling any business-logic errors and integration errors with the quote-service
+ - ### Bonus Points: the estimated net gain/loss of the portfolio (the total value of stocks if sold now minus the total price at which active shares were purchased)
 
 
 ### phase 2
