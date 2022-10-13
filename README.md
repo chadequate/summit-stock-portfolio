@@ -1,5 +1,26 @@
 # release notes / change log / task list
 
+### phase 3 - ui
+
+I took to heart the direction not to read ahead, so only now is the structure of this assignment fully dawning on me.
+
+- Phase 1 Data
+- Phase 2 Application
+- Phase 3 UI
+
+Which is pretty close to how I like to design greenfield projects, usually data first.
+
+UI will be the weakest link for me. My last UI work was in my previous role, almost six years ago. That was in Angular, 1.3 I think? It was my first and only experience with more modern Javascript frameworks. We used TypeScript with that, which made it easier/more relateable for me. 
+
+So with that, and a bit of Googling to find out what's currently popular in web UIs, I feel like AngularJS might be a good option. I'd go with that here. 
+
+I found a number of walkthroughs online for using AngularJS with a Java Spring MVC application. I'd create Angular Views in the project, which would directly call the RESTful webservice developed in the previous phase. 
+
+
+
+
+
+
 ### phase 2
 
 Okay, right off the bat this is moving in a different direction than I expected, but still seems fairly straight forward. Interestingly the links to Alphavantage.co and its Quote Endpoint don't work for me in the PDF viewer I'm using, but I won't spend any time figuring that out just yet since the context seems clear. 
