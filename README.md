@@ -12,14 +12,14 @@ Which is pretty close to how I like to design greenfield projects, usually data 
 
 UI will be the weakest link for me. My last UI work was in my previous role, almost six years ago. That was in Angular, 1.3 I think? It was my first and only experience with more modern Javascript frameworks. We used TypeScript with that, which made it easier/more relateable for me. 
 
-So with that, and a bit of Googling to find out what's currently popular in web UIs, I feel like AngularJS might be a good option. I'd go with that here. This part of the project will contain the most unknowns for me, but I'll do my best to lay out a good starting approach.
+So with that, and a bit of Googling to find out what's currently popular in web UIs, I feel like AngularJS might be a good option. Let's do that. This part of the project will contain the most unknowns for me, but I'll do my best to lay out a good starting approach.
 
 I found a number of walkthroughs online for using AngularJS with a Java Spring MVC application. I'd create Angular Views in the project, which would directly call the RESTful webservice developed in the previous phase. 
 
 There are more bullet points in this phase, so I'll just respond to those.
 
  - ### How business-logic is enforced and how the UI handles errors (this was built in Phase 1)
-I'd try to keep as much business logic and error handling as possible in the models, hopefully providing REST responses in a way that's easy/standard for Angular to deal with. I vaguely recall some patterns around this in my previous Angular work, I assume there are some standards/best pratices for how to handle and display errors in the various controls. How to automatically display a red info icon next to a text box, for example. There are many unknowns her
+I'd try to keep as much business logic and error handling as possible in the models, hopefully providing REST responses in a way that's easy/standard for Angular to deal with. Obviously some validations can be performed client-side, or mitigated/enforced through controls like a datetime picker. I vaguely recall some patterns around this in my previous Angular work, I assume there are some standards/best pratices for how to handle and display errors in the various controls. How to automatically display a red info icon next to a text box, for example. 
 
  - ### How the application could accommodate a different UI on top of the same work built in previous phases
 The UI in this case is just calling the REST service, I could easily develop multiple concurrent UIs. 
@@ -30,13 +30,25 @@ I'm going to assume automated testing here? I know that Selenium is popular with
 ### The UI needs to support the following actions:
 
  - ### Buying a stock (user specifies stock symbol and quanitity of shares to purchase)
+Obviously allowing the user to specify a stock symbol would need some validation. Initially, with the current design, this would need to be a validation that happens sometime after the REST call to the stock service. If the user input is invalid (stock symbol doesn't exist), let them know after submit. Maybe in a later iteration we could load valid lookup values. Maybe there's an appropriate endpoint already in Alphavantage that we could leverage? Quantity is easier, just needs to be a non-zero, non-negative integer. 
  
  - ### Selling a stock (user specifies stock symbol and quantity of shared to sell)
+Not sure there's any difference from the above here, with the intended design. Quantity would still be the non-zero and non-negative, the negative would be applied in application logic at the model level. 
+ 
  - ### Viewing the net-worth of the entire stock portfolio (i.e. all shares of currentlyowned stocks at their current market value)
+ Oh cool, a new endpoint. This is maybe the first bit of real logic so far. I think SUM the quantity field, then grab the latest quote. 
+ 
  - ### Viewing a "ledger" of transactions, in historical order
+ New endpoint, pull all records ordered by date. Maybe an arrow button in the UI to flip the order by. Maybe pagination, server side. 
+ 
  - ### Viewing the realized net gain/loss of the portfolio (the price at which shares were sold minus the price at which they were purchased)
+ Similar to viewing current net-worth, but now actually taking into account the stored price and summing that as well. 
+ 
  - ### Handling any business-logic errors and integration errors with the quote-service
+ These are the ones that developers care about. Log them, provide a way to get them back to developers, hopefully with little or no effort from users. 
+ 
  - ### Bonus Points: the estimated net gain/loss of the portfolio (the total value of stocks if sold now minus the total price at which active shares were purchased)
+Similar logic to view current net-worth (which grabs current quote), but sum the (historical) price column and subtract. 
 
 
 ### phase 2
