@@ -1,6 +1,86 @@
 # release notes / change log / task list
 
-### phase 3 - ui
+### dev environment setup (from zero)
+- install homebrew
+- install openjdk
+- install install maven
+- install intellij ce
+- install git
+
+### project approach
+Figured I'd stick with Java as that's mostly what I've been exposed to in recent years. At the very least this approach will be valuable experience for getting back to daily coding in my current situation. I'll start with a blank Spring Initilizr project and add dependancies as needed, starting with a Spring Data or Spring Rest to facilitate what I imagine will be some standard CRUD operation RESTful APIs around the h2 relational database I plan to build. I briefly considered something more SPA/framework-y like JHipster, but decided against that as the last Boostrap kind of thing I did was in .NET, I'm not as familiar with Java options, and not reading ahead I didn't want to box myself in too much too early on. 
+
+### project setup
+- blank spring initilizr project
+- new github repo
+- authenticate github to intellij
+- first commit
+- add instructions to readme
+
+### data setup (day 2)
+- added h2 dependencies and configuration to Java SPA
+- installed postgresql for learning/rapid prototyping of data design (never used this, trying to avoid SSMS/SQL Server)
+- plan is to create sql scripts for initialization of file-persisted h2
+
+## begin conceptual design - no implementation (per email instructions from A.)
+
+### data model (day 3)
+From the document:
+ - Buying a quantity of a specific stock, at a specific time, at a specific price
+ - Selling a quanity of a specific stock, at a specific time, at a specific price
+ - Summarizing the total purchase price of all stocks in the portfolio
+ - Summarizing the total purchase price of a single stock
+ - Summarizing net gain/loss for all stocks in the portfolio
+ - Summarizing net gain/loss for a single stock
+
+At this point I'm thinking maybe a single table, debits and credits, accounting style. I did something similar once when refactoring an inventory system, I liked how that turned out. I would make a Create Table script to define it in a relational database, heavy leveraging of aggregate functions (SUM). Buying is a positive integer in the quantity column, Selling is negative, Summing and Grouping can handle the rest. Quick and dirty. Simple.
+
+Maybe something like... 
+
+CREATE TABLE Trades (
+    StockSymbol varchar(5),
+    Quantity int,
+    Price money,
+    TradeTime datetime
+);
+
+StockSymbol would be the primary key with a unique constraint. Can always add some other key later if needed. I know the instructions at this point call for a single user, but I feel like multiple users could be brought into things later, which would obviously change the key. Maybe a composit key then. 
+
+### phase 2
+
+Okay, right off the bat this is moving in a different direction than I expected, but still seems fairly straight forward. Interestingly the links to Alphavantage.co and its Quote Endpoint don't work for me in the PDF viewer I'm using, but I won't spend any time figuring that out just yet since the context seems clear. 
+
+Initail thoughts based on details pulled from the first paragraph
+
+RESTful service
+ - RESTful service: Make a GET request to retrieve Price information
+ - Get will subsequently make a REST call out to Quote Endpoint to retrieve a Price for a given StockSymbol (or equivalent) on a given TradeTime
+ - Use the value returned to populate the Price field of a new trade record
+
+Securing the API secret
+ - For all of Pivotal Cloud Foundry's faults, I quite like the Configuration Server pattern it uses. Encrypted secrets hosted in a Github repo, decrypted and injected into applications at runtime
+ - I'm just now getting used to Secret Manager in GCP, which seems functionally somewhat similar but lacks the storage options of PCF's implementation
+ - Basically I think this decision will be largely driven by the best practices of the applicaiton hosting environment 
+ - I wonder how this is typically done in AWS
+
+Paragraph 2
+
+There seem to be two main concerns here
+ - Clean interface
+ - Testing
+
+Makes sense as unit testing and interface abstraction go hand-in-hand. I'd make an interface class that basically aligns with what I laid out for the first paragraph and hide the Alphavantage.co specifics in its own implementation. 
+
+Paragraph 3
+
+Service mocking for unit tests. I actually don't think I've ever seen anyone try to write a unit test that instantiated/called-out-to an external service. That would be horrifying. Obviously we don't want to be testing against anyone else's service. Unit tests should be entirely self-contained and testing our own code.
+
+Paragraph 4
+
+Integration tests. Today in my current role we're using Newman, the CLI/test runner for Postman, which works fairly well. We mostly use these to verify our own contracts, but I would be interested to learn about better ways to get ahead of contract changes in external services. 
+
+
+### phase 3 - ui (day 4)
 
 I took to heart the direction not to read ahead, so only now is the structure of this assignment fully dawning on me.
 
@@ -50,89 +130,7 @@ Not sure there's any difference from the above here, with the intended design. Q
  - ### Bonus Points: the estimated net gain/loss of the portfolio (the total value of stocks if sold now minus the total price at which active shares were purchased)
 Similar logic to view current net-worth (which grabs current quote), but sum the (historical) price column and subtract. 
 
-
-### phase 2
-
-Okay, right off the bat this is moving in a different direction than I expected, but still seems fairly straight forward. Interestingly the links to Alphavantage.co and its Quote Endpoint don't work for me in the PDF viewer I'm using, but I won't spend any time figuring that out just yet since the context seems clear. 
-
-Initail thoughts based on details pulled from the first paragraph
-
-RESTful service
- - RESTful service: Make a GET request to retrieve Price information
- - Get will subsequently make a REST call out to Quote Endpoint to retrieve a Price for a given StockSymbol (or equivalent) on a given TradeTime
- - Use the value returned to populate the Price field of a new trade record
-
-Securing the API secret
- - For all of Pivotal Cloud Foundry's faults, I quite like the Configuration Server pattern it uses. Encrypted secrets hosted in a Github repo, decrypted and injected into applications at runtime
- - I'm just now getting used to Secret Manager in GCP, which seems functionally somewhat similar but lacks the storage options of PCF's implementation
- - Basically I think this decision will be largely driven by the best practices of the applicaiton hosting environment 
- - I wonder how this is typically done in AWS
-
-Paragraph 2
-
-There seem to be two main concerns here
- - Clean interface
- - Testing
-
-Makes sense as unit testing and interface abstraction go hand-in-hand. I'd make an interface class that basically aligns with what I laid out for the first paragraph and hide the Alphavantage.co specifics in its own implementation. 
-
-Paragraph 3
-
-Service mocking for unit tests. I actually don't think I've ever seen anyone try to write a unit test that instantiated/called-out-to an external service. That would be horrifying. Obviously we don't want to be testing against anyone else's service. Unit tests should be entirely self-contained and testing our own code.
-
-Paragraph 4
-
-Integration tests. Today in my current role we're using Newman, the CLI/test runner for Postman, which works fairly well. We mostly use these to verify our own contracts, but I would be interested to learn about better ways to get ahead of contract changes in external services. 
-
-
-### data model (day 3)
-From the document:
- - Buying a quantity of a specific stock, at a specific time, at a specific price
- - Selling a quanity of a specific stock, at a specific time, at a specific price
- - Summarizing the total purchase price of all stocks in the portfolio
- - Summarizing the total purchase price of a single stock
- - Summarizing net gain/loss for all stocks in the portfolio
- - Summarizing net gain/loss for a single stock
-
-At this point I'm thinking maybe a single table, debits and credits, accounting style. I did something similar once when refactoring an inventory system, I liked how that turned out. I would make a Create Table script to define it in a relational database, heavy leveraging of aggregate functions (SUM). Buying is a positive integer in the quantity column, Selling is negative, Summing and Grouping can handle the rest. Quick and dirty. Simple.
-
-Maybe something like... 
-
-CREATE TABLE Trades (
-    StockSymbol varchar(5),
-    Quantity int,
-    Price money,
-    TradeTime datetime
-);
-
-StockSymbol would be the primary key with a unique constraint. Can always add some other key later if needed. I know the instructions at this point call for a single user, but I feel like multiple users could be brought into things later, which would obviously change the key. Maybe a composit key then. 
-
-## ^^^ begin conceptual design - no implementation ^^^
-
-### data setup (day 2)
-- added h2 dependencies and configuration to Java SPA
-- installed postgresql for learning/rapid prototyping of data design (never used this, trying to avoid SSMS/SQL Server)
-- plan is to create sql scripts for initialization of file-persisted h2
-
-### project setup
-- blank spring initilizr project
-- new github repo
-- authenticate github to intellij
-- first commit
-- add instructions to readme
-
-### project approach
-- Figured I'd stick with Java as that's mostly what I've been exposed to in recent years. At the very least this approach will be valuable experience for getting back to daily coding in my current situation. I'll start with a blank Spring Initilizr project and add dependancies as needed, starting with a Spring Data or Spring Rest to facilitate what I imagine will be some standard CRUD operation RESTful APIs around the h2 relational database I plan to build. I briefly considered something more SPA/framework-y like JHipster, but decided against that as the last Boostrap kind of thing I did was in .NET, I'm not as familiar with Java options, and not reading ahead I didn't want to box myself in too much too early on. 
-
-### dev environment setup (from zero)
-- install homebrew
-- install openjdk
-- install install maven
-- install intellij ce
-- install git
-
-# summit-stock-portfolio
-Stock Portfolio Coding Exercise
+# Stock Portfolio Coding Exercise
 
 Stock Portfolio Coding Exercise 
 Wednesday, September 11, 2019 10:45 AM
