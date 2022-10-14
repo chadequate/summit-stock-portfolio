@@ -50,7 +50,7 @@ StockSymbol would be the primary key with a unique constraint. Can always add so
 
 Okay, right off the bat this is moving in a different direction than I expected, but still seems fairly straight forward. Interestingly the links to Alphavantage.co and its Quote Endpoint don't work for me in the PDF viewer I'm using, but I won't spend any time figuring that out just yet since the context seems clear. 
 
-Initail thoughts based on details pulled from the first paragraph
+Initial thoughts based on details pulled from the first paragraph
 
 RESTful service
  - RESTful service: Make a GET request to retrieve Price information
