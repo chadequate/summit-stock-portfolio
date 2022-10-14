@@ -58,10 +58,7 @@ RESTful service
  - Use the value returned to populate the Price field of a new trade record
 
 Securing the API secret
- - For all of Pivotal Cloud Foundry's faults, I quite like the Configuration Server pattern it uses. Encrypted secrets hosted in a Github repo, decrypted and injected into applications at runtime
- - I'm just now getting used to Secret Manager in GCP, which seems functionally somewhat similar but lacks the storage options of PCF's implementation
- - Basically I think this decision will be largely driven by the best practices of the applicaiton hosting environment 
- - I wonder how this is typically done in AWS
+ - In PCF we use Configuration Server, which is actually pretty nice. In GCP we're using Secret Manager. Not sure exactly what I would use in a portable Java application, but maybe Spring has something. 
 
 Paragraph 2
 
