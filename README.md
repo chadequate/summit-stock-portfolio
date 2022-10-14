@@ -44,7 +44,7 @@ CREATE TABLE Trades (
     TradeTime datetime
 );
 
-StockSymbol would be the primary key with a unique constraint. Can always add some other key later if needed. I know the instructions at this point call for a single user, but I feel like multiple users could be brought into things later, which would obviously change the key. Maybe a composit key then. 
+StockSymbol would be the primary key with a unique constraint. Can always change that to a composit key with a userId later, if multiple users becomes a thing. 
 
 ### phase 2
 
